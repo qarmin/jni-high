@@ -1,0 +1,15 @@
+[package]
+name = "jni-high-build"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors = ["Rafał Mikrut <mikrutrafal@protonmail.com>"]
+description = "Build-time helpers for jni-high (DEX compilation)"
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/qarmin/jni-high"
+repository = "https://github.com/qarmin/jni-high"
+
+[lints]
+workspace = true
+
+[dependencies]

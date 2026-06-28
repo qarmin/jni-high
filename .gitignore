@@ -1,0 +1,7 @@
+*target*
+/target
+.idea
+reference
+/jni-rs
+.claude
+

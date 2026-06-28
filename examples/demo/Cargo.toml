@@ -1,0 +1,87 @@
+[workspace]
+# Stand-alone workspace so Slint does not pollute jni-high's dependency tree.
+# Build and install via: just demo  (see justfile at the repo root)
+
+[package]
+name = "jni-high-demo"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+[lib]
+name = "jni_high_demo"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "jni-high-demo"
+path = "src/main.rs"
+
+[dependencies]
+log = "0.4"
+jni-high = { path = "../../crates/jni-high", features = ["native-activity"] }
+
+[target.'cfg(target_os = "android")'.dependencies]
+slint = { version = "1.15.0", default-features = false, features = [
+    "std",
+    "compat-1-2",
+    "backend-android-activity-06",
+] }
+android-activity = { version = "0.6", features = ["native-activity"] }
+android_logger = "0.15.1"
+
+[target.'cfg(not(target_os = "android"))'.dependencies]
+slint = { version = "1.15.0", default-features = false, features = [
+    "std",
+    "compat-1-2",
+    "backend-winit",
+    "renderer-winit-software",
+] }
+
+[build-dependencies]
+slint-build = "1.15"
+
+[package.metadata.android]
+package = "io.github.jni_high.demo"
+label = "jni-high Demo"
+
+[package.metadata.android.sdk]
+min_sdk_version = 23
+target_sdk_version = 34
+
+[package.metadata.android.application]
+label = "jni-high Demo"
+# Required for ASAN wrap.sh: libs must be extracted to disk so wrap.sh can LD_PRELOAD the runtime.
+extract_native_libs = true
+
+[package.metadata.android.application.activity]
+name = "android.app.NativeActivity"
+config_changes = "orientation|keyboardHidden|screenSize|smallestScreenSize|navigation|uiMode|density|fontScale"
+launch_mode = "singleTop"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.VIBRATE"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.ACCESS_NETWORK_STATE"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.POST_NOTIFICATIONS"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.READ_EXTERNAL_STORAGE"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.READ_MEDIA_IMAGES"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.READ_MEDIA_VIDEO"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.READ_MEDIA_AUDIO"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.CAMERA"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.RECORD_AUDIO"

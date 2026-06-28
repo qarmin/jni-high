@@ -1,0 +1,28 @@
+[package]
+name = "jni-high"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors = ["Rafał Mikrut <mikrutrafal@protonmail.com>"]
+description = "High-level Rust-to-Android/Java bridge"
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/qarmin/jni-high"
+repository = "https://github.com/qarmin/jni-high"
+
+[lints]
+workspace = true
+
+[dependencies]
+jni = { version = "0.22" }
+jni-high-macros = { version = "0.1.0", path = "../jni-high-macros" }
+log = "0.4"
+
+[target.'cfg(target_os = "android")'.dependencies]
+android-activity = { version = "0.6", optional = true }
+
+[features]
+default = []
+# Enable the game-activity entry point (required when AndroidApp uses game-activity)
+game-activity = ["dep:android-activity", "android-activity/game-activity"]
+# Enable the native-activity entry point
+native-activity = ["dep:android-activity", "android-activity/native-activity"]

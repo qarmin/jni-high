@@ -1,0 +1,10 @@
+pub mod activity;
+pub mod browser;
+pub mod clipboard;
+pub mod connectivity;
+pub mod device;
+pub mod locale;
+pub mod notifications;
+pub mod permissions;
+pub mod share;
+pub mod vibration;

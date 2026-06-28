@@ -1,0 +1,107 @@
+import { Button, VerticalBox, ScrollView } from "std-widgets.slint";
+
+export global Demo {
+    in-out property <string> log: "Tap a button to test a jni-high API.";
+
+    callback clipboard-set();
+    callback clipboard-get();
+    callback share-text();
+    callback get-locale();
+    callback check-connectivity();
+    callback get-device-info();
+    callback vibrate();
+    callback haptic-click();
+    callback check-notification-permission();
+    callback check-storage-permission();
+    callback request-storage-permission();
+    callback check-camera-permission();
+    callback request-camera-permission();
+    callback open-notification-settings();
+    callback send-notification();
+    callback open-url();
+    callback open-camera();
+}
+
+component SectionLabel inherits Text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1565c0;
+}
+
+export component MainWindow inherits Window {
+    title: "jni-high Demo";
+    background: #fafafa;
+    preferred-width: 400px;
+    preferred-height: 800px;
+
+    VerticalBox {
+        padding: 12px;
+        spacing: 6px;
+
+        Text {
+            text: "jni-high Android API Demo";
+            font-size: 18px;
+            font-weight: 700;
+            horizontal-alignment: center;
+        }
+
+        ScrollView {
+            VerticalBox {
+                spacing: 6px;
+
+                SectionLabel { text: "Clipboard"; }
+                Button { text: "Write: 'Hello from jni-high!'"; clicked => { Demo.clipboard-set(); } }
+                Button { text: "Read clipboard"; clicked => { Demo.clipboard-get(); } }
+
+                SectionLabel { text: "Share"; }
+                Button { text: "Share text via system sheet"; clicked => { Demo.share-text(); } }
+
+                SectionLabel { text: "System info"; }
+                Button { text: "Get locale"; clicked => { Demo.get-locale(); } }
+                Button { text: "Check connectivity"; clicked => { Demo.check-connectivity(); } }
+                Button { text: "Get device info"; clicked => { Demo.get-device-info(); } }
+
+                SectionLabel { text: "Haptics"; }
+                Button { text: "Vibrate 300 ms (createOneShot)"; clicked => { Demo.vibrate(); } }
+                Button { text: "Haptic click (predefined HEAVY_CLICK)"; clicked => { Demo.haptic-click(); } }
+
+                SectionLabel { text: "Storage permission"; }
+                Button { text: "Storage: check"; clicked => { Demo.check-storage-permission(); } }
+                Button { text: "Storage: request"; clicked => { Demo.request-storage-permission(); } }
+
+                SectionLabel { text: "Camera & microphone"; }
+                Button { text: "Camera/mic: check"; clicked => { Demo.check-camera-permission(); } }
+                Button { text: "Camera/mic: request"; clicked => { Demo.request-camera-permission(); } }
+                Button { text: "Open camera app"; clicked => { Demo.open-camera(); } }
+
+                SectionLabel { text: "Notifications"; }
+                Button { text: "Check POST_NOTIFICATIONS"; clicked => { Demo.check-notification-permission(); } }
+                Button { text: "Open notification settings"; clicked => { Demo.open-notification-settings(); } }
+                Button { text: "Send test notification"; clicked => { Demo.send-notification(); } }
+
+                SectionLabel { text: "Browser"; }
+                Button { text: "Open jni-high repo in browser"; clicked => { Demo.open-url(); } }
+            }
+        }
+
+        Rectangle {
+            height: 160px;
+            background: #e8eaf6;
+            border-radius: 8px;
+            clip: true;
+
+            ScrollView {
+                Text {
+                    x: 6px;
+                    y: 6px;
+                    width: parent.width - 12px;
+                    text: Demo.log;
+                    font-size: 11px;
+                    color: #212121;
+                    wrap: word-wrap;
+                    vertical-alignment: top;
+                }
+            }
+        }
+    }
+}

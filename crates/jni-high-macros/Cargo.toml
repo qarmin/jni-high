@@ -1,0 +1,22 @@
+[package]
+name = "jni-high-macros"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors = ["Rafał Mikrut <mikrutrafal@protonmail.com>"]
+description = "Proc macro powering jni-high's android_bridge! - internal implementation detail, not for direct use"
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/qarmin/jni-high"
+repository = "https://github.com/qarmin/jni-high"
+
+[lints]
+workspace = true
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "3", features = ["full"] }
+quote = "1"
+proc-macro2 = "1"
+heck = "0.5"
